@@ -24,6 +24,36 @@
         <string>1</string>
         <key>LSRequiresIPhoneOS</key>
         <true/>
+        <key>NSAppTransportSecurity</key>
+        <dict>
+            <key>NSAllowsArbitraryLoads</key>
+            <true/>
+            <key>NSExceptionDomains</key>
+            <dict>
+                <key>localhost</key>
+                <dict>
+                    <key>NSExceptionAllowsInsecureHTTPLoads</key>
+                    <true/>
+                </dict>
+            </dict>
+        </dict>
+        <key>NSLocationWhenInUseUsageDescription</key>
+        <string></string>
+        <key>UILaunchStoryboardName</key>
+        <string>LaunchScreen</string>
+        <key>UIRequiredDeviceCapabilities</key>
+        <array>
+            <string>armv7</string>
+        </array>
+        <key>UISupportedInterfaceOrientations</key>
+        <array>
+            <string>UIInterfaceOrientationPortrait</string>
+            <string>UIInterfaceOrientationLandscapeLeft</string>
+            <string>UIInterfaceOrientationLandscapeRight</string>
+        </array>
+        <key>UIViewControllerBasedStatusBarAppearance</key>
+        <false/>
+        <key>NSCameraUsageDescription</key>
         <string>${PRODUCT_NAME} Camera Usage</string>
         <key>NSBluetoothPeripheralUsageDescription</key>
         <string>${PRODUCT_NAME} BluetoothPeripheral</string>
@@ -61,34 +91,5 @@
         <string>${PRODUCT_NAME} Speech Recognition Usage</string>
         <key>NSVideoSubscriberAccountUsageDescription</key>
         <string>${PRODUCT_NAME} Video Subscribe Usage</string>
-        <key>NSAppTransportSecurity</key>
-        <dict>
-            <key>NSAllowsArbitraryLoads</key>
-            <true/>
-            <key>NSExceptionDomains</key>
-            <dict>
-                <key>localhost</key>
-                <dict>
-                    <key>NSExceptionAllowsInsecureHTTPLoads</key>
-                    <true/>
-                </dict>
-            </dict>
-        </dict>
-        <key>NSLocationWhenInUseUsageDescription</key>
-        <string></string>
-        <key>UILaunchStoryboardName</key>
-        <string>LaunchScreen</string>
-        <key>UIRequiredDeviceCapabilities</key>
-        <array>
-            <string>armv7</string>
-        </array>
-        <key>UISupportedInterfaceOrientations</key>
-        <array>
-            <string>UIInterfaceOrientationPortrait</string>
-            <string>UIInterfaceOrientationLandscapeLeft</string>
-            <string>UIInterfaceOrientationLandscapeRight</string>
-        </array>
-        <key>UIViewControllerBasedStatusBarAppearance</key>
-        <false/>
     </dict>
 </plist>
