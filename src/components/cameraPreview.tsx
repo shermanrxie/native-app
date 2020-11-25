@@ -1,11 +1,11 @@
 import CameraRoll from '@react-native-community/cameraroll';
-import React, {Component} from 'react';
-import {View, StyleSheet, ViewStyle, TextStyle} from 'react-native';
+import React, { Component } from 'react';
+import { View, StyleSheet, ViewStyle, TextStyle } from 'react-native';
 
 import Button from 'react-native-button';
-import {RNCamera, TakePictureResponse} from 'react-native-camera';
+import { RNCamera, TakePictureResponse } from 'react-native-camera';
 
-interface Props {}
+interface Props { }
 
 interface camera {
   type: any;
@@ -39,11 +39,11 @@ class CameraPreview extends Component<Props, State> {
 
   takePicture() {
     if (this.camera) {
-      const options = {quality: 0.5, base64: true};
+      const options = { quality: 0.5, base64: true };
       this.camera
         .takePictureAsync(options)
         .then((data: TakePictureResponse) =>
-          CameraRoll.save(data.uri, {type: 'photo'}),
+          CameraRoll.save(data.uri, { type: 'photo' }),
         )
         .catch((err: any) => console.error(err));
     }
@@ -52,25 +52,25 @@ class CameraPreview extends Component<Props, State> {
   takeVideo() {
     this.state.isRecording ? this.stopRecording() : this.startRecording();
     this.state.isRecording
-      ? this.setState({isRecording: false})
-      : this.setState({isRecording: true});
+      ? this.setState({ isRecording: false })
+      : this.setState({ isRecording: true });
   }
 
   async startRecording() {
     if (this.camera) {
-      const options = {maxDuration: 10};
+      const options = { maxDuration: 10 };
       this.camera.recordAsync(options).then((data) => {
-        this.setState({videoUri: data.uri});
+        this.setState({ videoUri: data.uri });
         console.log('FILE', data.uri);
       });
     }
   }
 
-  stopRecording() {
+  async stopRecording() {
     if (this.camera) {
       this.camera.stopRecording();
       if (this.state.videoUri && this.state.videoUri.length > 0) {
-        CameraRoll.save(this.state.videoUri, {type: 'video'});
+        await CameraRoll.save(this.state.videoUri, { type: 'video' });
       }
       this.setState({
         isRecording: false,
@@ -80,7 +80,7 @@ class CameraPreview extends Component<Props, State> {
 
   switchType() {
     let newType;
-    const {back, front} = RNCamera.Constants.Type;
+    const { back, front } = RNCamera.Constants.Type;
 
     if (this.state.camera.type === back) {
       newType = front;
@@ -98,7 +98,7 @@ class CameraPreview extends Component<Props, State> {
 
   switchFlash() {
     let newFlashMode;
-    const {auto, on, off} = RNCamera.Constants.FlashMode;
+    const { auto, on, off } = RNCamera.Constants.FlashMode;
 
     if (this.state.camera.flashMode === auto) {
       newFlashMode = on;
@@ -127,9 +127,9 @@ class CameraPreview extends Component<Props, State> {
       typeButton,
       flashButton,
     } = styles;
-    const {type, flashMode} = this.state.camera;
+    const { type, flashMode } = this.state.camera;
     return (
-      <View style={{flex: 1}}>
+      <View style={{ flex: 1 }}>
         <RNCamera
           ref={(cam: any) => {
             this.camera = cam;
@@ -170,10 +170,10 @@ class CameraPreview extends Component<Props, State> {
               record
             </Button>
           )) || (
-            <Button style={captureButton} onPress={this.takeVideo.bind(this)}>
-              stop
-            </Button>
-          )}
+              <Button style={captureButton} onPress={this.takeVideo.bind(this)}>
+                stop
+              </Button>
+            )}
         </View>
       </View>
     );
