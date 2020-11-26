@@ -29,7 +29,7 @@ export default class App extends Component<Props, State> {
     }
     return (
       <Button onPress={() => this.setState({showCamera: true})}>
-        show camera
+        SHOW CAMERA
       </Button>
     );
   }
@@ -38,7 +38,7 @@ export default class App extends Component<Props, State> {
     const {container, welcome} = styles;
     return (
       <View style={{flex: 1}}>
-        <Header headerText="DEMO" />
+        <Header headerText="CAMERA DEMO" />
         {this.showCamera()}
         <View style={container}>
           <Card>

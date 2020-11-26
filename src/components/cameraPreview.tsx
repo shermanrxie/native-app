@@ -37,10 +37,10 @@ class CameraPreview extends Component<Props, State> {
     };
   }
 
-  takePicture() {
+  async takePicture() {
     if (this.camera) {
       const options = { quality: 0.5, base64: true };
-      this.camera
+      await this.camera
         .takePictureAsync(options)
         .then((data: TakePictureResponse) =>
           CameraRoll.save(data.uri, { type: 'photo' }),
@@ -56,25 +56,25 @@ class CameraPreview extends Component<Props, State> {
       : this.setState({ isRecording: true });
   }
 
-  async startRecording() {
+  startRecording() {
     if (this.camera) {
       const options = { maxDuration: 10 };
+      console.log('START video');
       this.camera.recordAsync(options).then((data) => {
-        this.setState({ videoUri: data.uri });
-        console.log('FILE', data.uri);
-      });
+        this.setState({ videoUri: data.uri, isRecording: false });
+      }).catch(err => console.log(err));
     }
   }
 
-  async stopRecording() {
+  stopRecording() {
     if (this.camera) {
       this.camera.stopRecording();
       if (this.state.videoUri && this.state.videoUri.length > 0) {
-        await CameraRoll.save(this.state.videoUri, { type: 'video' });
+        console.log('STOP', this.state.videoUri);
+        CameraRoll.save(this.state.videoUri, { type: 'video' });
       }
-      this.setState({
-        isRecording: false,
-      });
+
+      this.setState({ isRecording: false })
     }
   }
 
@@ -151,27 +151,27 @@ class CameraPreview extends Component<Props, State> {
         />
         <View style={[overlay, topOverlay]}>
           <Button style={typeButton} onPress={this.switchType.bind(this)}>
-            type
+            TYPE
           </Button>
           <Button style={flashButton} onPress={this.switchFlash.bind(this)}>
-            flash
+            FLASH
           </Button>
         </View>
         <View style={[overlay, bottomOverlay]}>
           {(!this.state.isRecording && (
             <Button style={captureButton} onPress={this.takePicture.bind(this)}>
-              pic
+              PIC
             </Button>
           )) ||
             null}
           <View style={buttonsSpace} />
           {(!this.state.isRecording && (
             <Button style={captureButton} onPress={this.takeVideo.bind(this)}>
-              record
+              RECORD
             </Button>
           )) || (
               <Button style={captureButton} onPress={this.takeVideo.bind(this)}>
-                stop
+                STOP
               </Button>
             )}
         </View>
