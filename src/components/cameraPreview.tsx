@@ -1,6 +1,13 @@
 import CameraRoll from '@react-native-community/cameraroll';
 import React, {Component} from 'react';
-import {View, StyleSheet, ViewStyle, TextStyle, Platform} from 'react-native';
+import {
+  View,
+  StyleSheet,
+  ViewStyle,
+  TextStyle,
+  PermissionsAndroid,
+  Platform,
+} from 'react-native';
 
 import Button from 'react-native-button';
 import {RNCamera, TakePictureResponse} from 'react-native-camera';
@@ -37,7 +44,22 @@ class CameraPreview extends Component<Props, State> {
     };
   }
 
+  checkAndroidPermission = async () => {
+    try {
+      const permission = PermissionsAndroid.PERMISSIONS.WRITE_EXTERNAL_STORAGE;
+      await PermissionsAndroid.request(permission).catch((error) =>
+        console.log(error),
+      );
+      Promise.resolve();
+    } catch (error) {
+      Promise.reject(error);
+    }
+  };
+
   async takePicture() {
+    if (Platform.OS === 'android') {
+      await this.checkAndroidPermission();
+    }
     if (this.camera) {
       const options = {quality: 0.5, base64: true};
       await this.camera
