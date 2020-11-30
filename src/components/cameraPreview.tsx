@@ -69,7 +69,10 @@ class CameraPreview extends Component<Props, State> {
     }
   }
 
-  takeVideo() {
+  async takeVideo() {
+    if (Platform.OS === 'android') {
+      await this.checkAndroidPermission();
+    }
     this.state.isRecording ? this.stopRecording() : this.startRecording();
     this.state.isRecording
       ? this.setState({isRecording: false})
